@@ -185,8 +185,6 @@ export default {
       // 拼接请求的url，注意query需要URLencode
       this.$axios.$get(this.$config.baseURL + "/api/translate?q="+encodedquery+"&from="+from+"&to="+to+"&appid="+appid+"&salt="+salt+'&action='+action+"&sign="+sign)
         .then(res => {
-          console.log(res);
-          console.log(appid);
           // 判断是否返回了翻译结果 trans_result
           if(res.trans_result) {
             // 判断返回结果是否为多行，如果是，则拼接对象内的dst并返回值
