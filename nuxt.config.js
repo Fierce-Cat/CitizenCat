@@ -26,7 +26,6 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -34,12 +33,24 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@alicloud/pop-core',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
   ],
+  axios:{
+    proxy: true,
+  },
+  proxy: {
+    '/api/translate': {
+      target: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api/translate': '/',
+      }
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -47,6 +58,9 @@ export default {
     theme: {
       dark: false,
       themes: {
+        light:{
+          primary: '#1d74a3',
+        },
         dark: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
@@ -62,5 +76,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    baseURL: process.env.BASE_URL,
+    translateAppId: process.env.TRANSLATE_APP_ID,
+    translateAppKey: process.env.TRANSLATE_APP_KEY,
+  },
 }

@@ -9,8 +9,9 @@
     >
       <v-toolbar-title v-text="title" />
       <v-subheader>
-        XX中英术语库
+        星际公民英中术语库
       </v-subheader>
+      <v-spacer></v-spacer>
     </v-app-bar>
     <v-main>
       <v-divider></v-divider>
@@ -22,7 +23,7 @@
       :absolute="!fixed"
       app
     >
-      <span>XX Translate &copy; {{ new Date().getFullYear() }} Created by <a href="https://github.com/Fierce-Cat" class="text-decoration-none">FierceCat</a></span>
+      <span>Citizen Translate &copy; {{ new Date().getFullYear() }} Created by <a href="https://github.com/Fierce-Cat" target="_blank" class="text-decoration-none">FierceCat</a></span>
     </v-footer>
   </v-app>
 </template>
@@ -34,7 +35,8 @@ export default {
     return {
       clipped: false,
       fixed: false,
-      title: 'XX Translate'
+      title: 'Citizen Translate',
+      legal_dialog: false,
     }
   }
 }
