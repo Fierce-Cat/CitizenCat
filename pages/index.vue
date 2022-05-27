@@ -43,7 +43,16 @@
               text
               outlined
               class="mt-2 mr-2"
-              color="primary">翻译</v-btn>
+              color="primary">翻译
+              <v-progress-circular
+                v-if="loading"
+                size="20"
+                width="3"
+                indeterminate
+                color="primary"
+                class="ml-1"
+              ></v-progress-circular>
+            </v-btn>
           </v-container>
           <v-divider/>
           <v-card flat>
@@ -132,7 +141,7 @@
           size="80"
           tile
         >
-          <v-img src="https://support.robertsspaceindustries.com/hc/article_attachments/360022704853/MadeByTheCommunity_White.png"></v-img>
+          <v-img src="/img/MadeByTheCommunity_White.png"></v-img>
         </v-avatar>
         </div>
       </v-card>
@@ -151,59 +160,65 @@ export default {
       input_lang: [
         {id:'auto', name: '自动识别'},
         {id:'en', name: 'English'},
-        // {id:'zh', name: '简体中文'},
+        {id:'zh', name: '简体中文'},
       ],
       output_lang: [
         {id:'zh', name: '简体中文'},
         // {id:'cht', name: '繁体中文'},
-        // {id:'en', name: 'English'}
+        {id:'en', name: 'English'}
       ],
       translating_text:"",
       original_lang: "auto",
       target_lang:"zh",
       translated_text:"翻译",
-      info_panel: [0]
+      info_panel: [0],
+      loading: 0,
     }
   },
   methods:{
     getTranslation:function(text, original_lan, target_lan){
+      // display loading
+      this.loading = 1;
       this.translating_text=text;
       this.original_lang = original_lan;
       this.target_lang = target_lan;
       //初始化要传给api的数据
-      const appid = this.$config.translateAppId;
-      const key = this.$config.translateAppKey;
-      const salt = (new Date).getTime();
       const query = this.translating_text;
-      const encodedquery = encodeURI(query);
       const from  =this.original_lang;
       const to = this.target_lang;
-      // 签名，注意这里在拼接query时，query必须是UTF8编码，如果中文不是UTF8编码，那么将会出现签名错误。并且不能用encodeURI进行编码。
-      let str1 = appid+query+salt+key;
-      let sign = MD5(str1);
-      let action = '1';
-      // 拼接请求的url，注意query需要URLencode
-      this.$axios.$get(this.$config.baseURL + "/api/translate?q="+encodedquery+"&from="+from+"&to="+to+"&appid="+appid+"&salt="+salt+'&action='+action+"&sign="+sign)
+      // 向server/translate 发送query/from/to 并获取翻译结果
+      let url = this.$config.baseURL + '/server/translate'
+      this.$axios.$post(url, {
+        "query": query,
+        "from": from,
+        "to": to,
+      })
         .then(res => {
+          let result = res.result
           // 判断是否返回了翻译结果 trans_result
-          if(res.trans_result) {
+          if(result.trans_result) {
             // 判断返回结果是否为多行，如果是，则拼接对象内的dst并返回值
-            if (res.trans_result.length > 1 ) {
+            if (result.trans_result.length > 1 ) {
               let multi_line_result = ''
-              for (let i = 0; i < res.trans_result.length; i++) {
-                multi_line_result = multi_line_result + res.trans_result[i].dst + '\n'
+              for (let i = 0; i < result.trans_result.length; i++) {
+                multi_line_result = multi_line_result + decodeURIComponent(result.trans_result[i].dst) + '\n'
               }
               this.translated_text = multi_line_result
+              this.loading = 0;
             } else {
-              this.translated_text = res.trans_result[0].dst
+              this.translated_text = decodeURIComponent(result.trans_result[0].dst)
+              this.loading = 0;
             }
+            this.loading = 0;
           } else {
             this.translated_text = '翻译'
+            this.loading = 0;
           }
 
 
         })
     },
+
     updateOriginalLang (id) {
       this.original_lang = id
     },
@@ -213,10 +228,10 @@ export default {
 
   },
   created () {
-    // 用户停止输入500ms后，自动调用翻译接口getTranslation
+    // 用户停止输入1000ms后，自动调用翻译接口getTranslation
     this.$watch('translating_text', debounce(function (val) {
       this.getTranslation(val, this.original_lang, this.target_lang)
-    }, 500))
+    }, 1000))
   },
   head () {
     return {

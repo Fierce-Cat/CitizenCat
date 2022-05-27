@@ -15,7 +15,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }
     ]
   },
 
@@ -39,12 +39,17 @@ export default {
   modules: [
     '@nuxtjs/axios',
   ],
+
+  serverMiddleware: [
+    // https://go.nuxtjs.dev/server-middleware
+    '~/server/middleware/index.js'
+  ],
   axios:{
     proxy: true,
   },
   proxy: {
     '/api/translate': {
-      target: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+      target: 'https://aip.baidubce.com',
       changeOrigin: true,
       pathRewrite: {
         '^/api/translate': '/',
@@ -80,7 +85,5 @@ export default {
   publicRuntimeConfig: {
     // Will be available on both server and client
     baseURL: process.env.BASE_URL,
-    translateAppId: process.env.TRANSLATE_APP_ID,
-    translateAppKey: process.env.TRANSLATE_APP_KEY,
   },
 }
