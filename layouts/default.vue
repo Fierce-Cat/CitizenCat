@@ -5,7 +5,6 @@
       fixed
       app
       flat
-      color="white"
     >
       <v-toolbar-title v-text="title" />
       <v-subheader>

@@ -24,26 +24,37 @@ app.post('/server/translate', (req, res) => {
   request(options, function (error, response, body) {
       // 返回token
       let token = JSON.parse(body).access_token
-      // 定义百度云智能翻译的请求参数
-      let options = {
-        url: 'https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1' + '?access_token=' + token,
-        method: 'POST',
-        json: {
-          "q": req.body.query,
-          "from": req.body.from,
-          "to": req.body.to,
-          "termIds": process.env.TERM_IDS
-        },
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
+      // 判断是否带optional_termIds
+      if (req.body.optional_termIds) {
+        // 带optional_termIds，则发送带optional_termIds的翻译请求
+        let options = {
+          url: 'https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1' + '?access_token=' + token,
+          method: 'POST',
+          json: {
+            "from": req.body.from,
+            "to": req.body.to,
+            "q": req.body.query,
+            "termIds": req.body.optional_termIds
+          }
         }
-      }
-      console.log(options)
-      // 发送请求
-      request(options, function (error, response, body) {
-          // 返回结果
+        request(options, function (error, response, body) {
           res.send(body)
-      })
+        })
+      } else {
+        // 不带optional_termIds，则发送不带optional_termIds的翻译请求
+        let options = {
+          url: 'https://aip.baidubce.com/rpc/2.0/mt/texttrans/v1' + '?access_token=' + token,
+          method: 'POST',
+          json: {
+            "from": req.body.from,
+            "to": req.body.to,
+            "q": req.body.query
+          }
+        }
+        request(options, function (error, response, body) {
+          res.send(body)
+        })
+      }
   })
 })
 
