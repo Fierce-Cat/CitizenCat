@@ -32,6 +32,7 @@ app.post('/server/translate', (req, res) => {
           "q": req.body.query,
           "from": req.body.from,
           "to": req.body.to,
+          "termids": process.env.TERM_IDS
         },
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
