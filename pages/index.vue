@@ -164,7 +164,7 @@ export default {
       ],
       output_lang: [
         {id:'zh', name: '简体中文'},
-        // {id:'cht', name: '繁体中文'},
+        {id:'cht', name: '繁体中文'},
         {id:'en', name: 'English'}
       ],
       translating_text:"",

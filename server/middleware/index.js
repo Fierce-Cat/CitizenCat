@@ -32,12 +32,13 @@ app.post('/server/translate', (req, res) => {
           "q": req.body.query,
           "from": req.body.from,
           "to": req.body.to,
-          "termids": process.env.TERM_IDS
+          "termIds": process.env.TERM_IDS
         },
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         }
       }
+      console.log(options)
       // 发送请求
       request(options, function (error, response, body) {
           // 返回结果
