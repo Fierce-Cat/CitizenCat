@@ -4,9 +4,9 @@ const app = express();
 app.use(express.json());
 
 // 创建一个ping路径，返回pong
-app.get('/server/ping', (req, res) => {
+app.get('/server/hello', (req, res) => {
   res.json({
-    message: 'pong'
+    message: 'world'
   });
 });
 

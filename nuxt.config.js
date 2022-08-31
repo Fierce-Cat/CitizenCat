@@ -42,7 +42,8 @@ export default {
 
   serverMiddleware: [
     // https://go.nuxtjs.dev/server-middleware
-    '~/server/middleware/index.js'
+    '~/server/middleware/index.js',
+    '~/server/middleware/hello.js'
   ],
   axios:{
     proxy: true,
