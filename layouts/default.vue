@@ -22,7 +22,7 @@
       :absolute="!fixed"
       app
     >
-      <span>Citizen Translate &copy; {{ new Date().getFullYear() }} Created by <a href="https://github.com/Fierce-Cat" target="_blank" class="text-decoration-none">FierceCat</a></span>
+      <span>CitizenCat &copy; {{ new Date().getFullYear() }} Created by <a href="https://github.com/Fierce-Cat" target="_blank" class="text-decoration-none">FierceCat</a></span>
     </v-footer>
   </v-app>
 </template>
@@ -34,7 +34,7 @@ export default {
     return {
       clipped: false,
       fixed: false,
-      title: 'Citizen Translate',
+      title: 'CitizenCat Translate',
       legal_dialog: false,
     }
   }

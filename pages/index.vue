@@ -165,7 +165,7 @@
               这是什么？
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              Citizen Translate 是装载定制语料库，深度学习后，专攻星际公民相关词汇的在线翻译服务。
+              CitizenCat 是装载定制语料库，深度学习后，专攻星际公民相关词汇的在线翻译服务。
               虽然写着是专攻，但不在词库内的内容仍会使用公共翻译。
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -174,7 +174,7 @@
               数据从哪里来？
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              Citizen Translate 的所有中英术语表均来自游戏社区，主要使用汉化组所发布的《SC全词汇中文对照表》。
+              CitizenCat 的所有中英术语表均来自游戏社区，主要使用汉化组所发布的《SC全词汇中文对照表》。
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
@@ -182,7 +182,7 @@
               我发现了问题！
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              Citizen Translate 欢迎所有的用户对本站数据提出建议，请加QQ：947169641 或发送邮件至 hyx5020#gmail.com (#替换为@)。
+              CitizenCat 欢迎所有的用户对本站数据提出建议，请加QQ：947169641 或发送邮件至 hyx5020#gmail.com (#替换为@)。
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
