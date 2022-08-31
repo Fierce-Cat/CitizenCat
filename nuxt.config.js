@@ -87,4 +87,9 @@ export default {
     // Will be available on both server and client
     baseURL: process.env.BASE_URL,
   },
+
+  server: {
+    host: '0.0.0.0',
+    port: process.env.PORT || 3000
+  }
 }
